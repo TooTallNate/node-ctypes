@@ -63,7 +63,7 @@ function open (libSpec) {
  */
 
 Object.defineProperty(exports, 'errno', {
-  get: function () {
+  get: function errno () {
     return ffi.errno();
   },
   configurable: true,
