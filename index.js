@@ -56,3 +56,16 @@ function libraryName (name) {
 function open (libSpec) {
   return new Library(libSpec);
 }
+
+/**
+ * The value of the latest system error. Similar to `errno` in libc, available
+ * on all platforms. Cannot be set. Number.
+ */
+
+Object.defineProperty(exports, 'errno', {
+  get: function () {
+    return ffi.errno();
+  },
+  configurable: true,
+  enumerable: true
+});
