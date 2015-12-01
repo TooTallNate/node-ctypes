@@ -10,6 +10,8 @@ var Library = require('./lib/Library');
 exports.cast = cast;
 exports.libraryName = libraryName;
 exports.open = open;
+exports.PointerType = require('./lib/PointerType');
+exports.StructType = require('./lib/StructType');
 
 /**
  * ABI:
@@ -33,6 +35,9 @@ exports.stdcall_abi = exports.winapi_abi = (function () {
 })();
 
 /**
+ * Casts the specified CData object to a new type, returning a new CData object
+ * representing the value in the new type.
+ *
  * https://developer.mozilla.org/en-US/docs/Mozilla/js-ctypes/js-ctypes_reference/ctypes#cast%28%29
  */
 
