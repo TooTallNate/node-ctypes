@@ -10,6 +10,7 @@ var Library = require('./lib/Library');
 exports.cast = cast;
 exports.libraryName = libraryName;
 exports.open = open;
+exports.ArrayType = require('./lib/ArrayType');
 exports.PointerType = require('./lib/PointerType');
 exports.StructType = require('./lib/StructType');
 
