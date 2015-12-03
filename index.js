@@ -13,6 +13,8 @@ exports.open = open;
 exports.ArrayType = require('./lib/ArrayType');
 exports.PointerType = require('./lib/PointerType');
 exports.StructType = require('./lib/StructType');
+exports.Int64 = require('./lib/Int64');
+exports.UInt64 = require('./lib/UInt64');
 
 /**
  * ABI:
