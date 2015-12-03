@@ -1,17 +1,10 @@
 // cause `jpm test`
 if (typeof process == 'object') {
   // nodejs
+  // invoke `node t` in the root of this module to run `t.js` test script
   var ctypes = module.exports = require('./lib/index');
 } else {
   // jpm
-  var self = require('sdk/self');
-  var chrome = require('chrome');
-  chrome.Cu.import('resource://gre/modules/ctypes.jsm');
+  // invoke `jpm run` in the root of this module to run `t.js` test script
+  require('./t');
 }
-
-
-var i = ctypes.Int64('-0x123456789000');
-console.log(i.toSource());
-console.log(i.toString(16));
-console.log(ctypes.Int64.hi(i));
-console.log(ctypes.Int64.lo(i));
