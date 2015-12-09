@@ -19,9 +19,11 @@ $ npm install ctypes
 Tests
 -----
 
-The tests are written in "`jpm` test style", but are executable both via Node.js
-and `node-ctypes` for implementation correctness, as well as directly in Firefox
-using its native ctypes implementation.
+The tests are written in ["`jpm` test
+style"](https://developer.mozilla.org/en-US/Add-ons/SDK/Low-Level_APIs/test_assert),
+but are executable both via Node.js and `node-ctypes` for implementation
+correctness, as well as directly in Firefox using its native ctypes
+implementation.
 
 #### Node.js (`npm`)
 
