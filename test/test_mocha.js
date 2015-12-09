@@ -1,8 +1,16 @@
 var assert = require('assert');
 var tests = require('./test-jpm');
 
+// make sure `assert` is not a Function, to match the `jpm test` env
+function Assert() {}
+Object.keys(assert).forEach(function (name) {
+  Assert.prototype[name] = assert[name];
+});
+
 Object.keys(tests).forEach(function (name) {
-  var parts = name.replace('test ', '').split('#');
+  if (!/^test /.test(name)) return;
+
+  var parts = name.substring(5).split('#');
   var title = parts.pop();
 
   var curr = exports;
@@ -16,9 +24,9 @@ Object.keys(tests).forEach(function (name) {
     var test = tests[name];
     var async = test.length === 2;
     if (async) {
-      test(assert, done);
+      test(new Assert(), done);
     } else {
-      test(assert);
+      test(new Assert());
       done();
     }
   };
