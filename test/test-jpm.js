@@ -73,5 +73,20 @@ exports['test PointerType instanceof'] = function(assert) {
   assert.ok(ctypes.uint8_t.ptr instanceof ctypes.PointerType);
 };
 
+exports['test PointerType#name'] = function(assert) {
+  assert.equal(ctypes.uint8_t.ptr.name, 'uint8_t*');
+};
+
+exports['test PointerType#size'] = function(assert) {
+  var is64bit;
+  if (ctypes.voidptr_t.size == 4 /* 32-bit */) {
+    is64bit = false;
+  } else if (ctypes.voidptr_t.size == 8 /* 64-bit */) {
+    is64bit = true;
+  }
+
+  assert.equal(ctypes.uint8_t.ptr.size, is64bit ? 8 : 4);
+};
+
 
 if (!isNode) require('sdk/test').run(exports);
