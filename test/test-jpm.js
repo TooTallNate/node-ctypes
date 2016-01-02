@@ -14,7 +14,8 @@ exports['test ctypes.open()'] = function(assert) {
 
 
 exports['test ctypes.void_t.size is `undefined`'] = function(assert) {
-  assert.strictEqual(ctypes.void_t.size, void(0));
+  assert.ok(!ctypes.void_t.hasOwnProperty('size'), 'void_t.size should not be an "own property"');
+  assert.strictEqual(ctypes.void_t.size, void(0), 'void_t.size should be `undefined`');
 };
 
 
