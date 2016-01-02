@@ -7,21 +7,20 @@ Object.keys(assert).forEach(function (name) {
   Assert.prototype[name] = assert[name];
 });
 
-Object.keys(tests).forEach(function (name) {
-  if (!/^test /.test(name)) return;
+Object.keys(tests).forEach(function (_name) {
+  if (!/^test /.test(_name)) return;
 
-  var parts = name.substring(5).split('#');
-  var title = parts.pop();
+  var name = _name.substring(5);
+  var part = name.match(/^(.*?)([ \#\.])(.*?)$/);
+  var base = part[1];
+  var title = part[3];
 
-  var curr = exports;
-  while (parts.length) {
-    var next = parts.shift();
-    if (!curr[next]) curr[next] = {};
-    curr = curr[next];
+  if (!exports[base]) {
+    exports[base] = {};
   }
 
-  curr[title] = function (done) {
-    var test = tests[name];
+  exports[base][title] = function (done) {
+    var test = tests[_name];
     var async = test.length === 2;
     if (async) {
       test(new Assert(), done);
