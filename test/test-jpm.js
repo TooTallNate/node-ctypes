@@ -73,6 +73,11 @@ exports['test PointerType instanceof'] = function(assert) {
   assert.ok(ctypes.uint8_t.ptr instanceof ctypes.PointerType);
 };
 
+exports['test PointerType ==='] = function(assert) {
+  assert.ok(ctypes.uint8_t.ptr === ctypes.uint8_t.ptr);
+  assert.ok(ctypes.uint8_t.ptr === ctypes.PointerType(ctypes.uint8_t));
+};
+
 exports['test PointerType#name'] = function(assert) {
   assert.equal(ctypes.uint8_t.ptr.name, 'uint8_t*');
 };
