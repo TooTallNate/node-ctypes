@@ -19,7 +19,7 @@ exports['test ctypes.void_t.size is `undefined`'] = function(assert) {
 };
 
 
-exports['test CData#throws TypeError for out of range'] = function(assert) {
+exports['test CData throws TypeError for out of range'] = function(assert) {
   var err;
   try {
     ctypes.uint8_t(-1);
@@ -147,6 +147,29 @@ exports['test ArrayData instanceof'] = function(assert) {
   assert.ok(!(array instanceof IntArray));
   assert.ok(array instanceof IntArrayFour);
   assert.ok(array instanceof ctypes.CData);
+};
+
+exports['test ArrayData throws TypeError invalid input'] = function(assert) {
+  assert.throws(function () {
+    ctypes.int.array()();
+  }, TypeError);
+  assert.throws(function () {
+    ctypes.int.array()();
+  }, /size undefined ArrayType constructor takes one argument/);
+
+  assert.throws(function () {
+    ctypes.int.array()(undefined);
+  }, TypeError);
+  assert.throws(function () {
+    ctypes.int.array()(undefined);
+  }, /argument of size undefined ArrayType constructor must be an array object or integer/);
+
+  assert.throws(function () {
+    ctypes.int.array(1)(1, 2, 3);
+  }, TypeError);
+  assert.throws(function () {
+    ctypes.int.array(1)(1, 2, 3);
+  }, /size defined ArrayType constructor takes at most one argument/);
 };
 
 
