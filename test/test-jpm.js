@@ -115,6 +115,26 @@ exports['test PointerData instanceof'] = function(assert) {
   var ptr = ctypes.voidptr_t(0);
   assert.ok(ptr instanceof ctypes.voidptr_t);
   assert.ok(ptr instanceof ctypes.CData);
+
+  ptr = ctypes.int(1).address();
+  assert.ok(ptr instanceof ctypes.int.ptr);
+  assert.ok(ptr instanceof ctypes.CData);
+};
+
+exports['test PointerData#contents'] = function(assert) {
+  var i = ctypes.int(-4);
+  var ptr = i.address();
+  assert.equal(-4, ptr.contents);
+
+  ptr.contents = 5;
+
+  assert.equal(5, ptr.contents);
+  assert.equal(5, i.value);
+};
+
+exports['test PointerData#isNull()'] = function(assert) {
+  assert.equal(false, ctypes.voidptr_t(1).isNull());
+  assert.equal(true, ctypes.voidptr_t(0).isNull());
 };
 
 
