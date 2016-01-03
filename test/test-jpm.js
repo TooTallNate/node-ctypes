@@ -138,6 +138,12 @@ exports['test PointerData#isNull()'] = function(assert) {
 };
 
 
+exports['test ArrayType instanceof'] = function(assert) {
+  var IntArray = ctypes.int.array();
+  assert.ok(IntArray instanceof ctypes.ArrayType);
+  assert.ok(IntArray instanceof ctypes.CType);
+};
+
 exports['test ArrayType#name'] = function(assert) {
   assert.equal(ctypes.uint8_t.array().name, 'uint8_t[]');
   assert.equal(ctypes.float.array(1).name, 'float[1]');
