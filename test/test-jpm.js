@@ -68,9 +68,21 @@ exports['test CType#size'] = function(assert) {
   assert.equal(ctypes.uint64_t.size, 8);
 };
 
+exports['test CType#toString()'] = function(assert) {
+  assert.equal(ctypes.uint8_t.toString(), 'type uint8_t');
+  assert.equal(ctypes.int8_t.toString(), 'type int8_t');
+  assert.equal(ctypes.char.toString(), 'type char');
+  assert.equal(ctypes.signed_char.toString(), 'type signed_char');
+  assert.equal(ctypes.unsigned_char.toString(), 'type unsigned_char');
+  assert.equal(ctypes.void_t.toString(), 'type void');
+};
+
 
 exports['test PointerType instanceof'] = function(assert) {
   assert.ok(ctypes.uint8_t.ptr instanceof ctypes.PointerType);
+  assert.ok(ctypes.uint8_t.ptr instanceof ctypes.CType);
+  assert.ok(ctypes.voidptr_t instanceof ctypes.PointerType);
+  assert.ok(ctypes.voidptr_t instanceof ctypes.CType);
 };
 
 exports['test PointerType ==='] = function(assert) {
@@ -91,6 +103,18 @@ exports['test PointerType#size'] = function(assert) {
   }
 
   assert.equal(ctypes.uint8_t.ptr.size, is64bit ? 8 : 4);
+};
+
+exports['test PointerType#toString()'] = function(assert) {
+  assert.equal(ctypes.uint8_t.ptr.toString(), 'type uint8_t*');
+  assert.equal(ctypes.voidptr_t.toString(), 'type void*');
+};
+
+
+exports['test PointerData instanceof'] = function(assert) {
+  var ptr = ctypes.voidptr_t(0);
+  assert.ok(ptr instanceof ctypes.voidptr_t);
+  assert.ok(ptr instanceof ctypes.CData);
 };
 
 
