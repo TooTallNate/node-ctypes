@@ -18,6 +18,12 @@ exports['test ctypes.void_t.size is `undefined`'] = function(assert) {
   assert.strictEqual(ctypes.void_t.size, void(0), 'void_t.size should be `undefined`');
 };
 
+exports['test ctypes.void_t() throws an Error'] = function(assert) {
+  assert.throws(function () {
+    ctypes.void_t();
+  }, /cannot construct from void_t/);
+};
+
 
 exports['test CData throws TypeError for out of range'] = function(assert) {
   var err;
