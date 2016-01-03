@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/TooTallNate/node-ctypes#readme",
   "dependencies": {
-    "array-index": "^0.2.0",
+    "array-index": "^0.9.1",
     "debug": "^2.2.0",
     "es6-weak-map": "^2.0.1",
     "ffi": "^2.0.0",
