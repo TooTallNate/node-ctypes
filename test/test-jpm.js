@@ -118,4 +118,36 @@ exports['test PointerData instanceof'] = function(assert) {
 };
 
 
+exports['test ArrayType#name'] = function(assert) {
+  assert.equal(ctypes.uint8_t.array().name, 'uint8_t[]');
+  assert.equal(ctypes.float.array(1).name, 'float[1]');
+  assert.equal(ctypes.int.array(10).name, 'int[10]');
+};
+
+exports['test ArrayType#size'] = function(assert) {
+  assert.equal(ctypes.int16_t.array(1).size, 2);
+  assert.equal(ctypes.int16_t.array(2).size, 4);
+  assert.equal(ctypes.int16_t.array(10).size, 20);
+
+  // `undefined` for indeterminate sized array types
+  assert.strictEqual(ctypes.uint8_t.array().size, void(0));
+};
+
+exports['test ArrayType#toString()'] = function(assert) {
+  assert.equal(ctypes.uint8_t.array().toString(), 'type uint8_t[]');
+  assert.equal(ctypes.float.array(1).toString(), 'type float[1]');
+  assert.equal(ctypes.int.array(10).toString(), 'type int[10]');
+};
+
+
+exports['test ArrayData instanceof'] = function(assert) {
+  var IntArray = ctypes.int.array();
+  var IntArrayFour = ctypes.int.array(4);
+  var array = IntArrayFour([1, -2, 3, -4]);
+  assert.ok(!(array instanceof IntArray));
+  assert.ok(array instanceof IntArrayFour);
+  assert.ok(array instanceof ctypes.CData);
+};
+
+
 if (!isNode) require('sdk/test').run(exports);
