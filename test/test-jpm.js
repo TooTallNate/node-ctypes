@@ -156,7 +156,15 @@ exports['test ArrayType#name'] = function(assert) {
   assert.equal(ctypes.int.array(10).name, 'int[10]');
 };
 
+exports['test ArrayType#length'] = function(assert) {
+  assert.equal(ctypes.float.array(1).length, 1);
+  assert.equal(ctypes.int.array(2).length, 2);
+  assert.equal(ctypes.int.array(1024).length, 1024);
+};
+
 exports['test ArrayType#size'] = function(assert) {
+  assert.strictEqual(ctypes.int16_t.array().size, void(0));
+
   assert.equal(ctypes.int16_t.array(1).size, 2);
   assert.equal(ctypes.int16_t.array(2).size, 4);
   assert.equal(ctypes.int16_t.array(10).size, 20);
@@ -179,6 +187,22 @@ exports['test ArrayData instanceof'] = function(assert) {
   assert.ok(!(array instanceof IntArray));
   assert.ok(array instanceof IntArrayFour);
   assert.ok(array instanceof ctypes.CData);
+};
+
+exports['test ArrayData#[n]'] = function(assert) {
+  var array = ctypes.int.array()([1, -2, 3, -4]);
+  assert.equal(1, array[0]);
+  assert.equal(-2, array[1]);
+  assert.equal(3, array[2]);
+  assert.equal(-4, array[3]);
+
+  array[3] = 16;
+  assert.equal(16, array[3]);
+};
+
+exports['test ArrayData#[n]'] = function(assert) {
+  var array = ctypes.int.array()([1, -2, 3, -4]);
+  assert.equal(4, array.length);
 };
 
 exports['test ArrayData throws TypeError invalid input'] = function(assert) {
