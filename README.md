@@ -3,6 +3,10 @@ node-ctypes
 ### Node.js implementation of "ctypes" to interface with C libs
 [![Build Status](https://secure.travis-ci.org/TooTallNate/node-ctypes.svg)](https://travis-ci.org/TooTallNate/node-ctypes)
 
+__NOTE: this is a work-in-progres and there is a lot of ground to cover. `v0.x` of
+node-ctypes will be the implementation phase, and `v1.0.0` will be API-complete.
+Pull requests welcome!__
+
 Ctypes for Node.js.
 
 
