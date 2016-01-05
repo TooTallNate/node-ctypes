@@ -205,7 +205,7 @@ exports['test ArrayData#[n]'] = function(assert) {
   assert.equal(4, array.length);
 };
 
-exports['test ArrayData throws TypeError invalid input'] = function(assert) {
+exports['test ArrayData throws TypeError on invalid input'] = function(assert) {
   assert.throws(function () {
     ctypes.int.array()();
   }, TypeError);
@@ -226,6 +226,23 @@ exports['test ArrayData throws TypeError invalid input'] = function(assert) {
   assert.throws(function () {
     ctypes.int.array(1)(1, 2, 3);
   }, /size defined ArrayType constructor takes at most one argument/);
+};
+
+
+exports['test Int64 throws TypeError on no input'] = function(assert) {
+  assert.throws(function () {
+    ctypes.Int64();
+  }, /Int64 constructor takes one argument/);
+
+  assert.throws(function () {
+    ctypes.UInt64();
+  }, /UInt64 constructor takes one argument/);
+};
+
+exports['test UInt64 throws TypeError on negative numbers'] = function(assert) {
+  assert.throws(function () {
+    ctypes.UInt64(-1);
+  }, /can't pass the number -1 to argument 1 of UInt64/);
 };
 
 
