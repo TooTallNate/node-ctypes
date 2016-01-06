@@ -15,7 +15,7 @@ exports['test ctypes.open()'] = function(assert) {
 
 exports['test ctypes.void_t.size is `undefined`'] = function(assert) {
   assert.ok(!ctypes.void_t.hasOwnProperty('size'), 'void_t.size should not be an "own property"');
-  assert.strictEqual(ctypes.void_t.size, void(0), 'void_t.size should be `undefined`');
+  assert.equal('undefined', typeof ctypes.void_t.size, 'void_t.size should be `undefined`');
 };
 
 exports['test ctypes.void_t() throws an Error'] = function(assert) {
@@ -55,6 +55,11 @@ exports['test CData#value'] = function(assert) {
 exports['test CData instanceof'] = function(assert) {
   assert.ok(ctypes.uint8_t(1) instanceof ctypes.uint8_t);
   assert.ok(ctypes.uint8_t(1) instanceof ctypes.CData);
+};
+
+exports['test CData#toString()'] = function(assert) {
+  var t = ctypes.int32_t(5);
+  assert.equal('ctypes.int32_t(5)', t.toString());
 };
 
 
@@ -163,14 +168,12 @@ exports['test ArrayType#length'] = function(assert) {
 };
 
 exports['test ArrayType#size'] = function(assert) {
-  assert.strictEqual(ctypes.int16_t.array().size, void(0));
-
   assert.equal(ctypes.int16_t.array(1).size, 2);
   assert.equal(ctypes.int16_t.array(2).size, 4);
   assert.equal(ctypes.int16_t.array(10).size, 20);
 
   // `undefined` for indeterminate sized array types
-  assert.strictEqual(ctypes.uint8_t.array().size, void(0));
+  assert.equal('undefined', typeof ctypes.uint8_t.array().size);
 };
 
 exports['test ArrayType#toString()'] = function(assert) {
@@ -298,10 +301,20 @@ exports['test Int64 throws TypeError on no input'] = function(assert) {
   }, /UInt64 constructor takes one argument/);
 };
 
+exports['test Int64 works with string inputs'] = function(assert) {
+  var num = ctypes.Int64("-0x1234567890ABCDEF");
+  assert.equal('-1311768467294899695', num.toString());
+};
+
 exports['test UInt64 throws TypeError on negative numbers'] = function(assert) {
   assert.throws(function () {
     ctypes.UInt64(-1);
   }, /can't pass the number -1 to argument 1 of UInt64/);
+};
+
+exports['test UInt64 works with string inputs'] = function(assert) {
+  var num = ctypes.UInt64("0x1234567890ABCDEF");
+  assert.equal('1311768467294899695', num.toString());
 };
 
 
