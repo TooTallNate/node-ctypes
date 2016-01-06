@@ -229,6 +229,65 @@ exports['test ArrayData throws TypeError on invalid input'] = function(assert) {
 };
 
 
+exports['test StructType instanceof'] = function(assert) {
+  var S = ctypes.StructType('S');
+  assert.ok(S instanceof ctypes.StructType);
+  assert.ok(S instanceof ctypes.CType);
+};
+
+exports['test StructType#name'] = function(assert) {
+  var foo = ctypes.StructType('foo');
+  assert.equal(foo.name, 'foo');
+};
+
+exports['test StructType#size'] = function(assert) {
+  var one = ctypes.StructType('one', [
+    { 'one': ctypes.uint8_t },
+  ]);
+  assert.equal(one.size, 1);
+
+  var two = ctypes.StructType('two', [
+    { 'one': ctypes.uint16_t },
+    { 'two': ctypes.uint8_t },
+  ]);
+  assert.equal(two.size, 4);
+};
+
+exports['test StructType#size (opaque is `undefined`)'] = function(assert) {
+  var opaque = ctypes.StructType('opaque');
+  assert.equal('undefined', typeof opaque.size);
+};
+
+exports['test StructType#prototype (opaque is `undefined`)'] = function(assert) {
+  var opaque = ctypes.StructType('opaque');
+  assert.equal('undefined', typeof opaque.prototype);
+
+  // `prototype` should be set after the `define()` call
+  opaque.define([ { foo: ctypes.int } ]);
+  assert.equal('object', typeof opaque.prototype);
+};
+
+exports['test StructType#toString()'] = function(assert) {
+  var timeval = ctypes.StructType('timeval');
+  assert.equal(timeval.toString(), 'type timeval');
+};
+
+
+exports['test StructData instanceof'] = function(assert) {
+  var foo = ctypes.StructType('foo', [ { foo: ctypes.uint8_t } ]);
+  var f = new foo();
+  assert.ok(f instanceof foo);
+  assert.ok(f instanceof ctypes.CData);
+};
+
+exports['test StructData constructor throws Error for opaque type'] = function(assert) {
+  var opaque = ctypes.StructType('opaque');
+  assert.throws(function () {
+    opaque();
+  }, /cannot construct an opaque StructType/);
+};
+
+
 exports['test Int64 throws TypeError on no input'] = function(assert) {
   assert.throws(function () {
     ctypes.Int64();
