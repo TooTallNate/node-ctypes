@@ -214,6 +214,14 @@ exports['test ArrayData#length'] = function(assert) {
   assert.equal(2, array.length);
 };
 
+exports['test ArrayData#addressOfElement()'] = function(assert) {
+  var array = ctypes.int.array()([1, -2, 3, -4]);
+
+  var ptr = array.addressOfElement(3);
+  assert.equal(ptr.constructor.targetType, ctypes.int);
+  assert.equal(ptr.contents, -4);
+};
+
 exports['test ArrayData throws TypeError on invalid input'] = function(assert) {
   assert.throws(function () {
     ctypes.int.array()();
@@ -315,8 +323,14 @@ exports['test StructData#addressOfField()'] = function(assert) {
   ]);
 
   var f = new Foo(1, 2);
-  assert.equal(f.addressOfField('int32').contents, 1);
-  assert.equal(f.addressOfField('int16').contents, 2);
+
+  var ptr = f.addressOfField('int32');
+  assert.equal(ptr.constructor.targetType, ctypes.int32_t);
+  assert.equal(ptr.contents, 1);
+
+  ptr = f.addressOfField('int16');
+  assert.equal(ptr.constructor.targetType, ctypes.int16_t);
+  assert.equal(ptr.contents, 2);
 };
 
 exports['test StructData throws Error for opaque type'] = function(assert) {
