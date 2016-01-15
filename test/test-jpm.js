@@ -192,20 +192,26 @@ exports['test ArrayData instanceof'] = function(assert) {
   assert.ok(array instanceof ctypes.CData);
 };
 
-exports['test ArrayData#[n]'] = function(assert) {
+exports['test ArrayData#[index]'] = function(assert) {
   var array = ctypes.int.array()([1, -2, 3, -4]);
+
+  // getters
   assert.equal(1, array[0]);
   assert.equal(-2, array[1]);
   assert.equal(3, array[2]);
   assert.equal(-4, array[3]);
 
+  // setters
   array[3] = 16;
   assert.equal(16, array[3]);
 };
 
-exports['test ArrayData#[n]'] = function(assert) {
+exports['test ArrayData#length'] = function(assert) {
   var array = ctypes.int.array()([1, -2, 3, -4]);
   assert.equal(4, array.length);
+
+  var array = ctypes.int.array()([1, -2]);
+  assert.equal(2, array.length);
 };
 
 exports['test ArrayData throws TypeError on invalid input'] = function(assert) {
@@ -283,11 +289,23 @@ exports['test StructData instanceof'] = function(assert) {
   assert.ok(f instanceof ctypes.CData);
 };
 
-exports['test StructData constructor throws Error for opaque type'] = function(assert) {
-  var opaque = ctypes.StructType('opaque');
-  assert.throws(function () {
-    opaque();
-  }, /cannot construct an opaque StructType/);
+exports['test StructData#["foo"]'] = function(assert) {
+  var Foo = ctypes.StructType('Foo', [
+    { int32: ctypes.int32_t },
+    { int16: ctypes.int16_t },
+  ]);
+
+  // getters
+  var f = new Foo(1, 2);
+  assert.equal(f.int32, 1);
+  assert.equal(f.int16, 2);
+
+  // setters
+  f.int32 = 3;
+  f.int16 = 4;
+
+  assert.equal(f.int32, 3);
+  assert.equal(f.int16, 4);
 };
 
 exports['test StructData#addressOfField()'] = function(assert) {
@@ -295,11 +313,17 @@ exports['test StructData#addressOfField()'] = function(assert) {
     { int32: ctypes.int32_t },
     { int16: ctypes.int16_t },
   ]);
-  assert.equal(Foo.size, 8);
 
   var f = new Foo(1, 2);
   assert.equal(f.addressOfField('int32').contents, 1);
   assert.equal(f.addressOfField('int16').contents, 2);
+};
+
+exports['test StructData throws Error for opaque type'] = function(assert) {
+  var opaque = ctypes.StructType('opaque');
+  assert.throws(function () {
+    opaque();
+  }, /cannot construct an opaque StructType/);
 };
 
 
