@@ -4,6 +4,7 @@ os:
 sudo: false
 language: cpp
 addons:
+  firefox: latest
   apt:
     sources:
       - ubuntu-toolchain-r-test
@@ -19,8 +20,7 @@ env:
 
 matrix:
   include:
-    - addons: firefox: latest
-      env: TRAVIS_NODE_VERSION="5" JPM="1" DISPLAY=':99.0'
+    - env: TRAVIS_NODE_VERSION="5" JPM="1" DISPLAY=':99.0'
 
 install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
