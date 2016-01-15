@@ -30,5 +30,6 @@ script:
   # Output useful info for debugging
   - node --version
   - npm --version
+  - which firefox
   # Run tests
   - if [[ $JPM == "1" ]]; then jpm test; else npm test; fi
