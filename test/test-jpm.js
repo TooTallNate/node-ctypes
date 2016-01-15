@@ -290,6 +290,18 @@ exports['test StructData constructor throws Error for opaque type'] = function(a
   }, /cannot construct an opaque StructType/);
 };
 
+exports['test StructData#addressOfField()'] = function(assert) {
+  var Foo = ctypes.StructType('Foo', [
+    { int32: ctypes.int32_t },
+    { int16: ctypes.int16_t },
+  ]);
+  assert.equal(Foo.size, 8);
+
+  var f = new Foo(1, 2);
+  assert.equal(f.addressOfField('int32').contents, 1);
+  assert.equal(f.addressOfField('int16').contents, 2);
+};
+
 
 exports['test Int64 throws TypeError on no input'] = function(assert) {
   assert.throws(function () {
