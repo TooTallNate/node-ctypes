@@ -270,6 +270,20 @@ exports['test StructType#size'] = function(assert) {
   assert.equal(two.size, 4);
 };
 
+exports['test StructType#fields'] = function(assert) {
+  var fields = [
+    { 'one': ctypes.uint16_t },
+    { 'two': ctypes.uint8_t },
+  ];
+  var two = ctypes.StructType('two', fields);
+  assert.deepEqual(two.fields, fields);
+};
+
+exports['test StructType#fields (opaque is `undefined`)'] = function(assert) {
+  var opaque = ctypes.StructType('opaque');
+  assert.equal('undefined', typeof opaque.fields);
+};
+
 exports['test StructType#size (opaque is `undefined`)'] = function(assert) {
   var opaque = ctypes.StructType('opaque');
   assert.equal('undefined', typeof opaque.size);
