@@ -364,7 +364,7 @@ exports['test UInt64 throws TypeError on negative numbers'] = function(assert) {
 
 exports['test UInt64 works with string inputs'] = function(assert) {
   var num = ctypes.UInt64("0x1234567890ABCDEF");
-  assert.equal('1311768467294899696', num.toString());
+  assert.equal('1311768467294899695', num.toString());
 };
 
 
