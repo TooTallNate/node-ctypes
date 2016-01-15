@@ -21,6 +21,7 @@ env:
 matrix:
   include:
     - env: TRAVIS_NODE_VERSION="5" JPM="1" DISPLAY=':99.0'
+      os: linux
 
 install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
@@ -30,6 +31,8 @@ install:
   # Install dependencies and build
   - npm install
 
+before_script:
+  - sh -e /etc/init.d/xvfb start
 
 script:
   # Output useful info for debugging
