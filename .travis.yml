@@ -32,12 +32,11 @@ install:
   - npm install
 
 before_script:
-  - sh -e /etc/init.d/xvfb start
+  - if [[ $JPM == "1" ]]; then sh -e /etc/init.d/xvfb start; fi
 
 script:
   # Output useful info for debugging
   - node --version
   - npm --version
-  - which firefox
   # Run tests
   - if [[ $JPM == "1" ]]; then jpm -b `which firefox` test; else npm test; fi
