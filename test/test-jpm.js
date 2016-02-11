@@ -390,9 +390,42 @@ exports['test Int64 throws TypeError on no input'] = function(assert) {
   }, /UInt64 constructor takes one argument/);
 };
 
+exports['test Int64#toString(radix)'] = function(assert) {
+  var input = -201;
+  var num = ctypes.Int64(input);
+  assert.equal(input.toString(8), num.toString(8));
+  assert.equal(input.toString(10), num.toString(10));
+  assert.equal(input.toString(16), num.toString(16));
+};
+
 exports['test Int64 works with string inputs'] = function(assert) {
-  var num = ctypes.Int64("-0x1234567890ABCDEF");
+  var num = ctypes.Int64('-0x1234567890ABCDEF');
+  assert.equal('-1234567890abcdef', num.toString(16));
   assert.equal('-1311768467294899695', num.toString());
+};
+
+exports['test Int64.compare()'] = function(assert) {
+  var one = ctypes.Int64(1);
+  var two = ctypes.Int64(2);
+  assert.equal(0, ctypes.Int64.compare(one, one));
+  assert.equal(-1, ctypes.Int64.compare(one, two));
+  assert.equal(1, ctypes.Int64.compare(two, one));
+};
+
+exports['test Int64.compare() throws if not given 2 arguments'] = function(assert) {
+  assert.throws(function () {
+    ctypes.Int64.compare(-1);
+  }, /Int64\.compare takes two arguments/);
+};
+
+exports['test Int64.hi()'] = function(assert) {
+  var num = ctypes.Int64('-0x1234567890ABCDEF');
+  assert.equal(-0x12345679, ctypes.Int64.hi(num));
+};
+
+exports['test Int64.lo()'] = function(assert) {
+  var num = ctypes.Int64('-0x1234567890ABCDEF');
+  assert.equal(0x6F543211, ctypes.Int64.lo(num));
 };
 
 exports['test UInt64 throws TypeError on negative numbers'] = function(assert) {
@@ -402,8 +435,18 @@ exports['test UInt64 throws TypeError on negative numbers'] = function(assert) {
 };
 
 exports['test UInt64 works with string inputs'] = function(assert) {
-  var num = ctypes.UInt64("0x1234567890ABCDEF");
+  var num = ctypes.UInt64('0x1234567890ABCDEF');
   assert.equal('1311768467294899695', num.toString());
+};
+
+exports['test UInt64.hi()'] = function(assert) {
+  var num = ctypes.UInt64('0xffffffff00000007');
+  assert.equal(0xffffffff, ctypes.UInt64.hi(num));
+};
+
+exports['test UInt64.lo()'] = function(assert) {
+  var num = ctypes.UInt64('0xffffffff00000007');
+  assert.equal(7, ctypes.UInt64.lo(num));
 };
 
 
