@@ -5,7 +5,8 @@
   "description": "Node.js implementation of \"ctypes\" to interface with C libs",
   "main": "index.js",
   "scripts": {
-    "test": "node-gyp rebuild --directory test && mocha -gc --ui exports --reporter spec test/test_mocha.js"
+    "test": "npm run build-test && mocha -gc --ui exports --reporter spec test/test_mocha.js",
+    "build-test": "node-gyp rebuild --directory test"
   },
   "repository": {
     "type": "git",
