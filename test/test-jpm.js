@@ -1,15 +1,40 @@
+var env;
+var ctypes;
+
+// running in Node.js or jpm?
 const isNode = typeof process === 'object';
+
 if (isNode) {
   // nodejs
-  const ctypes = require('../');
+  ctypes = require('../');
+  env = process.env;
 } else {
   // jpm
-  const self = require('sdk/self');
   const chrome = require('chrome');
   chrome.Cu.import('resource://gre/modules/ctypes.jsm');
+  env = require('sdk/system').env;
 }
 
+exports['test ctypes.libraryName()'] = function(assert) {
+  assert.ok(/libc\.(so|dylib|dll)/.test(ctypes.libraryName('c')));
+  assert.ok(/libtest\.(so|dylib|dll)/.test(ctypes.libraryName('test')));
+  assert.ok(/libss3\.(so|dylib|dll)/.test(ctypes.libraryName('ss3')));
+};
+
 exports['test ctypes.open()'] = function(assert) {
+  var libtestPath = env.PWD + '/test/build/Release/' + ctypes.libraryName('test');
+
+  var lib = ctypes.open(libtestPath);
+
+  var add_with_c = lib.declare('add', ctypes.default_abi,
+      ctypes.int,    // return type
+      ctypes.int,    // a
+      ctypes.int     // b
+  );
+
+  assert.equal(add_with_c(2, 5), 7);
+
+  lib.close();
 };
 
 
