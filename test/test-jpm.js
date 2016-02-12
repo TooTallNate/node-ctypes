@@ -440,13 +440,13 @@ exports['test UInt64 works with string inputs'] = function(assert) {
 };
 
 exports['test UInt64.hi()'] = function(assert) {
-  var num = ctypes.UInt64('0xffffffff00000007');
+  var num = ctypes.UInt64('0xffffffffffffffff');
   assert.equal(0xffffffff, ctypes.UInt64.hi(num));
 };
 
 exports['test UInt64.lo()'] = function(assert) {
-  var num = ctypes.UInt64('0xffffffff00000007');
-  assert.equal(7, ctypes.UInt64.lo(num));
+  var num = ctypes.UInt64('0xffffffffffffffff');
+  assert.equal(0xffffffff, ctypes.UInt64.lo(num));
 };
 
 
