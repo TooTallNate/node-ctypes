@@ -400,8 +400,10 @@ exports['test Int64#toString(radix)'] = function(assert) {
 
 exports['test Int64 works with string inputs'] = function(assert) {
   var num = ctypes.Int64('-0x1234567890ABCDEF');
-  assert.equal('-1234567890abcdef', num.toString(16));
   assert.equal('-1311768467294899695', num.toString());
+
+  var num = ctypes.Int64('10');
+  assert.equal('10', num.toString());
 };
 
 exports['test Int64.compare()'] = function(assert) {
@@ -437,6 +439,9 @@ exports['test UInt64 throws TypeError on negative numbers'] = function(assert) {
 exports['test UInt64 works with string inputs'] = function(assert) {
   var num = ctypes.UInt64('0x1234567890ABCDEF');
   assert.equal('1311768467294899695', num.toString());
+
+  var num = ctypes.UInt64('10');
+  assert.equal('10', num.toString());
 };
 
 exports['test UInt64.hi()'] = function(assert) {
