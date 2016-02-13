@@ -72,6 +72,10 @@ exports['test CData throws TypeError for out of range'] = function(assert) {
   assert.equal(err.message, 'can\'t convert the string "a" to the type uint8_t');
 };
 
+exports['test CData with no arguments is 0'] = function(assert) {
+  assert.equal(ctypes.int().value, 0);
+};
+
 exports['test CData#value'] = function(assert) {
   assert.equal(ctypes.uint8_t(1).value, 1);
   assert.equal(ctypes.uint8_t(255).value, 255);
