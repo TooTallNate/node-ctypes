@@ -4,7 +4,7 @@ var env;
 var ctypes;
 
 // running in Node.js or jpm?
-const isNode = typeof process === 'object';
+var isNode = typeof process === 'object';
 
 if (isNode) {
   // nodejs
@@ -12,7 +12,7 @@ if (isNode) {
   env = process.env;
 } else {
   // jpm
-  const chrome = require('chrome');
+  var chrome = require('chrome');
   chrome.Cu.import('resource://gre/modules/ctypes.jsm');
   env = require('sdk/system').env;
 }
