@@ -78,6 +78,10 @@ exports['test CData with no arguments is 0'] = function(assert) {
   assert.equal(ctypes.int().value, 0);
 };
 
+exports['test CData integer types work with string inputs'] = function(assert) {
+  assert.equal(ctypes.int('-0x10').value, -0x10);
+};
+
 exports['test CData#value'] = function(assert) {
   assert.equal(ctypes.uint8_t(1).value, 1);
   assert.equal(ctypes.uint8_t(255).value, 255);
