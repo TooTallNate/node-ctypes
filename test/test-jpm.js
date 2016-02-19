@@ -17,6 +17,18 @@ if (isNode) {
   env = require('sdk/system').env;
 }
 
+exports['test ctypes.default_abi should exist'] = function(assert) {
+  assert.ok(ctypes.default_abi);
+};
+
+exports['test ctypes.stdcall_abi should exist'] = function(assert) {
+  assert.ok(ctypes.stdcall_abi);
+};
+
+exports['test ctypes.winapi_abi should exist'] = function(assert) {
+  assert.ok(ctypes.winapi_abi);
+};
+
 exports['test ctypes.libraryName()'] = function(assert) {
   assert.ok(/libc\.(so|dylib|dll)/.test(ctypes.libraryName('c')));
   assert.ok(/libtest\.(so|dylib|dll)/.test(ctypes.libraryName('test')));
@@ -37,6 +49,13 @@ exports['test ctypes.open()'] = function(assert) {
   assert.equal(add_with_c(2, 5), 7);
 
   lib.close();
+};
+
+
+exports['test ABI#toString()'] = function(assert) {
+  assert.equal(ctypes.default_abi.toString(), 'ctypes.default_abi');
+  assert.equal(ctypes.stdcall_abi.toString(), 'ctypes.stdcall_abi');
+  assert.equal(ctypes.winapi_abi.toString(), 'ctypes.winapi_abi');
 };
 
 
